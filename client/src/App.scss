@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+// Your variable overrides
+
+// Colors
+$darkblue: #1e3d59; // Navy
+$skyblue: #03a9f4; // Skyblue
+$lightblue: #cffbfb; // Light Blue
+$light: #f5f0e1; // Almond
+$dark: #333; // Dark
+$red: #b21f2d; // Red
+$gray: #585151; // Gray
+$gold: #ce9a00; // Gold
+
+// Default Variables
+$primary: $darkblue;
+$danger: $red;
+$warning: $gold;
+
+// ######## Customize SCSS site ########
+//
+// Body
+
+$body-bg: $light;
+$body-color: $darkblue;
+$font-family-sans-serif: 'Roboto', sans-serif;
+
+// ######## HEADER ########
+//
+// Navigation
+.navbar {
+  background-color: $primary;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 2rem;
+  z-index: 1;
+  width: 100%;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+
+  a {
+    padding: 0.45rem;
+    margin: 0 0.25rem;
+    &:hover {
+      color: $light;
+      text-decoration: none;
+    }
+  }
+  h1 {
+    color: $light;
+    margin-bottom: 0.6rem;
+  }
+  ul {
+    margin-bottom: 0;
+    display: flex;
+    list-style: none;
+    text-align: center;
+    justify-content: center;
+    color: $light;
+    li {
+      a {
+        color: #fff;
+        margin-right: 0.6rem;
+      }
+    }
+  }
+}
+
+// ######## BODY #########
+//
+// Cards
+
+.row {
+  margin-top: 15px;
+  .card {
+    background-color: $darkblue;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.435),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    .year-badge {
+      position: absolute;
+
+      span {
+        position: absolute;
+        left: 194px;
+        top: 234px;
+      }
+      .badge {
+        box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.517),
+          0 6px 20px 0 rgba(0, 0, 0, 0.231);
+      }
+      .badge-primary {
+        color: #fff;
+        background-color: $skyblue;
+      }
+      .badge-warning {
+        background-color: $gold;
+        color: #fff;
+      }
+    }
+    .card-img-top {
+      height: 253px;
+      background-color: $lightblue;
+    }
+
+    .card-body {
+      h6 {
+        &:before {
+          border-left: solid 2px $light;
+          margin-right: 2px;
+          content: '';
+        }
+        color: $light !important;
+      }
+      ul {
+        color: $light;
+        list-style: none;
+      }
+      .list {
+        margin: 0.5rem 0;
+        padding: 0;
+
+        li {
+          padding-bottom: 0.3rem;
+          font-size: 12px;
+        }
+      }
+      p {
+        margin: 0;
+        button {
+          font-size: 12px;
+          margin: 0 15px 0 0;
+        }
+        .btn-gray {
+          color: #fff;
+          border-color: $gray;
+          background-color: $gray;
+          &:hover {
+            background-color: #4a4646 !important;
+            border-color: #4a4646 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ######## LOGIN & REGISTER #########
+//
+.container {
+  // Login
+  .alert-danger {
+    color: $light;
+    background-color: $danger;
+    border-color: #e9c0c4;
+  }
+
+  // Alert
+  .form-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    overflow: hidden;
+    padding: 0 2rem;
+    h1,
+    h2,
+    h3 {
+      text-align: center;
+    }
+  }
+}
+
+/* The following line can be included in a src/App.scss */
+
+@import '~bootstrap/scss/bootstrap';
