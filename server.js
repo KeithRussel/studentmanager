@@ -9,7 +9,8 @@ const app = express();
 connectDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }), fileUpload());
+app.use(express.json({ extended: false }));
+app.use(express.json(fileUpload()));
 
 // Upload Endpoint
 app.post('/upload', (req, res) => {
@@ -42,9 +43,6 @@ app.post('/upload', (req, res) => {
 // Define Routes
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
-// app.use('/api/subjects', require('./routes/subjects'));
-
-// app.use('/api/:id/students', require('./routes/subjects'));
 app.use('/api/students', require('./routes/students'));
 
 // Serve static assets in production
