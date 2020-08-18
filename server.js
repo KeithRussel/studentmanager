@@ -9,8 +9,8 @@ const app = express();
 connectDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }));
-app.use(express.json(fileUpload()));
+app.use(express.json({ extended: false }), fileUpload());
+// app.use(express.json(fileUpload()));
 
 // Upload Endpoint
 app.post('/upload', (req, res) => {
