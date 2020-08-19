@@ -39,34 +39,40 @@ const StudentForm = () => {
   const [filename, setFileName] = useState('Choose File..');
   const [uploadedFile, setUploadedFile] = useState({});
 
-  const { /*imgUrl,*/ name, year, block, phone, email } = student;
+  const { imgUrl, name, year, block, phone, email } = student;
 
   const onChange = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
   const onFileChange = (e) => {
-    setFile(e.target.files[0]);
-    setFileName(e.target.files[0].name);
+    e.preventDefault();
+    // setFile(e.target.files[0]);
+    // setFileName(e.target.files[0].name);
 
-    setStudent(
-      {
-        ...student,
-        [e.target.id]: URL.createObjectURL(e.target.files[0]),
-        // [e.target.id]: e.target.files[0].name.replace(/ /g, '-'),
-      },
-      console.log('setStudent for Image only')
-    );
+    // setStudent(
+    //   {
+    //     ...student,
+    //     [e.target.id]: URL.createObjectURL(e.target.files[0]),
+    //     // [e.target.id]: e.target.files[0].name.replace(/ /g, '-'),
+    //   },
+    //   console.log('setStudent for Image only')
+    // );
     // setFileName({ imgUrl: URL.createObjectURL(e.target.files[0]) });
 
     //// Convert image to base64
-    // const reader = new FileReader();
-    // const imgfile = e.target.files[0];
-    // reader.onloadend = () => {
-    //   setFileName(reader.result);
-    //   // setStudent({ ...student, [e.target.id]: e.target.files[0].name });
-    // };
-    // reader.readAsDataURL(imgfile);
+    const imgfile = e.target.files[0];
+    const name = e.target.files[0].name.replace(/ /g, '-');
+    const reader = new FileReader();
+    const targetId = e.target.id;
+    reader.readAsDataURL(imgfile);
+    reader.onloadend = () => {
+      setFileName(name);
+      console.log('base64:', reader.result);
+      setStudent({ ...student, [targetId]: reader.result });
+      // setStudent({ ...student, [e.target.id]: e.target.files[0].name });
+    };
+
     // setFileName({
     //   imgUrl: URL.createObjectURL(e.target.files[0]),
     // });
