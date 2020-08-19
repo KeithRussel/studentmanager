@@ -38,13 +38,13 @@ const StudentItem = ({ student }) => {
         {imgUrl ? (
           <Card.Img
             variant='top'
-            // src={imgUrl}
-            src={`uploads/${imgUrl}`}
+            src={imgUrl}
+            // src={`uploads/${imgUrl}`}
             // src={uploadedFile.filePath}
             style={{ width: '100% ' }}
           />
         ) : (
-          <Card.Img variant='top' src='../uploads/marcelito.jpg' />
+          <Card.Img variant='top' src='../uploads/pokeball.png' />
         )}
         <div className='year-badge'>
           <Badge
