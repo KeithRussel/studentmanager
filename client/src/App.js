@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import Register from './components/auth/Register';
@@ -41,6 +42,7 @@ const App = () => {
                   <Route exact path='/login' component={Login} />
                 </Switch>
               </Container>
+              <Footer />
             </Fragment>
           </Router>
         </AlertState>

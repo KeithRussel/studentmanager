@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Form, Row, Col, FormGroup, Button, Image } from 'react-bootstrap';
+import { Form, Row, Col, FormGroup, Button } from 'react-bootstrap';
 import StudentContext from '../../context/student/studentContext';
-import axios from 'axios';
+// import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -35,30 +35,36 @@ const StudentForm = () => {
   });
 
   const [file, setFile] = useState('');
-
   const [filename, setFileName] = useState('Choose File..');
-  const [uploadedFile, setUploadedFile] = useState({});
+  // const [uploadedFile, setUploadedFile] = useState({});
 
-  const { imgUrl, name, year, block, phone, email } = student;
+  const { /*imgUrl,*/ name, year, block, phone, email } = student;
+
+  const multiCalls = (e) => {
+    onChange(e);
+    onFileChange(e);
+    // imgSizeNotify(e);
+  };
 
   const onChange = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
+  const notify = () =>
+    toast.warn('Images uploaded is temporary only for this Testing site!', {
+      position: 'top-right',
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   const onFileChange = (e) => {
     e.preventDefault();
-    // setFile(e.target.files[0]);
-    // setFileName(e.target.files[0].name);
-
-    // setStudent(
-    //   {
-    //     ...student,
-    //     [e.target.id]: URL.createObjectURL(e.target.files[0]),
-    //     // [e.target.id]: e.target.files[0].name.replace(/ /g, '-'),
-    //   },
-    //   console.log('setStudent for Image only')
-    // );
-    // setFileName({ imgUrl: URL.createObjectURL(e.target.files[0]) });
+    const size = e.target.files[0].size;
+    const maxSize = 50000;
 
     //// Convert image to base64
     const imgfile = e.target.files[0];
@@ -66,25 +72,65 @@ const StudentForm = () => {
     const reader = new FileReader();
     const targetId = e.target.id;
     reader.readAsDataURL(imgfile);
-    reader.onloadend = () => {
-      setFileName(name);
-      console.log('base64:', reader.result);
-      setStudent({ ...student, [targetId]: reader.result });
-      // setStudent({ ...student, [e.target.id]: e.target.files[0].name });
-    };
 
-    // setFileName({
-    //   imgUrl: URL.createObjectURL(e.target.files[0]),
-    // });
+    // Image file Validation
+    try {
+      if (size >= maxSize) {
+        toast.warn(
+          '😢 Image is not valid, please check if the size is 45mb below!',
+          {
+            position: 'top-right',
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+        setFileName('Please choose another image..');
+        setStudent({ ...student, [targetId]: '' });
+        // console.log('Image file is too big');
+      } else {
+        toast.success('🚀 Your image is valid to upload!', {
+          position: 'top-right',
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        reader.onloadend = () => {
+          setFileName(name);
+          // console.log('base64:', reader.result);
+          setStudent({ ...student, [targetId]: reader.result });
+        };
+        // console.log('Image file is ok');
+      }
+    } catch (error) {
+      console.log('You clicked cancel image file');
+    }
+
+    console.log(`${size}: ${name}`);
+    setFile(e.target.files[0].size);
   };
 
-  const twoCalls = (e) => {
-    onChange(e);
-    onFileChange(e);
-  };
+  // const imgSizeNotify = (e) => {
+  //   e.preventDefault();
+
+  // };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (current === null) {
+      addStudent(student);
+    } else {
+      updateStudent(student);
+    }
+    setFileName('Choose File..');
+    clearAll();
+
     //// Upload files to /uploads/ folder method
 
     // const formData = new FormData();
@@ -107,30 +153,18 @@ const StudentForm = () => {
     //     console.log(err.response.data.msg);
     //   }
     // }
-
-    if (current === null) {
-      addStudent(student);
-    } else {
-      updateStudent(student);
-    }
-    setFileName('Choose File..');
-    clearAll();
   };
 
   const clearAll = () => {
     clearCurrent();
   };
 
-  const notify = () =>
-    toast.warn('Images uploaded is temporary only for this Testing site!', {
-      position: 'top-right',
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+  // const a = setFile(e.target.files[0].size);
+  // const maxSize = 50000;
+
+  // if(a => maxSize) {
+  //   console.log('Button update should disabled');
+  // }
 
   return (
     <>
@@ -156,7 +190,7 @@ const StudentForm = () => {
               key={student.imgUrl || null}
               // name='imgUrl'
               // value={imgUrl}
-              onChange={twoCalls}
+              onChange={multiCalls}
             />
           </Form.File>
         </Form.Group>
@@ -265,6 +299,7 @@ const StudentForm = () => {
           <Col sm={{ span: 10, offset: 2 }}>
             {/* <Button closeButton>Sign in</Button> */}
             <Form.Control
+              disabled={!student.imgUrl && student.imgUrl === ''}
               onClick={notify}
               type='submit'
               value={current ? 'Update Student' : 'Add Student'}

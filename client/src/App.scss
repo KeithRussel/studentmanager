@@ -11,6 +11,7 @@ $dark: #333; // Dark
 $red: #b21f2d; // Red
 $gray: #585151; // Gray
 $gold: #ce9a00; // Gold
+$bg-yellow: #a57c00; // dark yellow
 
 // Default Variables
 $primary: $darkblue;
@@ -102,6 +103,7 @@ $font-family-sans-serif: 'Roboto', sans-serif;
     .card-img-top {
       height: 253px;
       background-color: $lightblue;
+      object-fit: cover;
     }
 
     .card-body {
@@ -146,13 +148,34 @@ $font-family-sans-serif: 'Roboto', sans-serif;
   }
 }
 
+// ######## FOOTER ###########
+.footer {
+  background-color: #1e3d59;
+  padding: 25px 0;
+  .copyright {
+    text-align: center;
+    font-size: 9px;
+    color: $light;
+  }
+}
+
 // ######## MODAL FORM ###############
 .modal-content {
   .modal-body {
     .Toastify {
-      .Toastify__toast-body {
-        color: $dark;
-        font-style: italic;
+      .Toastify__toast--warning {
+        background-color: $bg-yellow;
+        .Toastify__toast-body {
+          color: $light;
+
+          // font-style: italic;
+        }
+      }
+      .Toastify__toast--success {
+        .Toastify__toast-body {
+          color: $light;
+          // font-style: italic;
+        }
       }
     }
   }
