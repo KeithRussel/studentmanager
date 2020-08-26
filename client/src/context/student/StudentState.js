@@ -29,6 +29,7 @@ const StudentState = (props) => {
   const getStudents = async () => {
     try {
       const res = await axios.get('/api/students');
+      console.log(res.data);
 
       dispatch({
         type: GET_STUDENTS,

@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <>
       <ModalForm />
-      <Row>
+      <Row className='mb-5'>
         <Students />
       </Row>
     </>
