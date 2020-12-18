@@ -11,12 +11,27 @@ const Student = require('../models/Student');
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
+    const pageSize = 4;
+    const page = Number(req.query.pageNumber) || 1;
+
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: 'i',
+          },
+        }
+      : {};
+
+    const count = await Student.countDocuments({ user: req.user.id });
     const students = await Student.find({ user: req.user.id })
-      .populate('subjects')
       .sort({
         date: -1,
-      });
-    res.json(students);
+      })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+    // console.log(req.query);
+    res.json({ students, page, pages: Math.ceil(count / pageSize) });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

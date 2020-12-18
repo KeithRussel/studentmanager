@@ -9,8 +9,11 @@ const Students = () => {
 
   const { students, filtered, getStudents, loading } = studentContext;
 
+  // const keyword = match.params.keyword;
+  // const pageNumber = match.params.pageNumber || 1;
+
   useEffect(() => {
-    getStudents();
+    // getStudents();
     // eslint-disable-next-line
   }, []);
 

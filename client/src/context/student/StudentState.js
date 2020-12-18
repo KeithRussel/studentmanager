@@ -13,11 +13,15 @@ import {
   CLEAR_STUDENTS,
   CLEAR_FILTER,
   STUDENT_ERROR,
+  LOADING,
 } from '../types';
 
 const StudentState = (props) => {
   const initialState = {
     students: null,
+    pages: null,
+    page: null,
+    loading: false,
     current: null,
     filtered: null,
     error: null,
@@ -26,14 +30,18 @@ const StudentState = (props) => {
   const [state, dispatch] = useReducer(studentReducer, initialState);
 
   // Get Students
-  const getStudents = async () => {
+  const getStudents = async (keyword = '', pageNumber = '') => {
     try {
-      const res = await axios.get('/api/students');
-      console.log(res.data);
+      const { data } = await axios.get(
+        `/api/students?keyword=${keyword}&pageNumber=${pageNumber}`
+      );
+      console.log(data);
+
+      // loadingPage();
 
       dispatch({
         type: GET_STUDENTS,
-        payload: res.data,
+        payload: data,
       });
     } catch (err) {
       dispatch({
@@ -135,10 +143,19 @@ const StudentState = (props) => {
     dispatch({ type: CLEAR_FILTER });
   };
 
+  const loadingPage = () => {
+    dispatch({
+      type: LOADING,
+    });
+  };
+
   return (
     <StudentContext.Provider
       value={{
         students: state.students,
+        pages: state.pages,
+        page: state.page,
+        loading: state.loading,
         current: state.current,
         filtered: state.filtered,
         error: state.error,
@@ -149,6 +166,7 @@ const StudentState = (props) => {
         updateStudent,
         filterStudents,
         clearFilter,
+        loadingPage,
         getStudents,
         clearStudents,
       }}

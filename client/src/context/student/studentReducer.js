@@ -9,6 +9,7 @@ import {
   UPDATE_STUDENT,
   FILTER_STUDENTS,
   CLEAR_FILTER,
+  LOADING,
 } from '../types';
 
 export default (state, action) => {
@@ -16,7 +17,9 @@ export default (state, action) => {
     case GET_STUDENTS:
       return {
         ...state,
-        students: action.payload,
+        students: action.payload.students,
+        pages: action.payload.pages,
+        page: action.payload.page,
         loading: false,
       };
     case ADD_STUDENT:
@@ -78,6 +81,11 @@ export default (state, action) => {
       return {
         ...state,
         filtered: null,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     case STUDENT_ERROR:
       return {
