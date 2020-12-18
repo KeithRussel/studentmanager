@@ -2,7 +2,7 @@
 
 Users/Teachers can manage and organize their own students info
 
-![](studentmanager.gif)
+![](studentmanage.gif)
 
 ## Installation
 
