@@ -1,6 +1,7 @@
 # Student Manager
 
-Users/Teachers can manage and organize their own students info
+Users/Teachers can manage and organize their own students info.
+Check the [sample link](https://intense-depths-40828.herokuapp.com/)
 
 ![](studentmanage.gif)
 
